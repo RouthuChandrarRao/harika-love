@@ -3,158 +3,171 @@
 <head>
 <meta charset="UTF-8">
 <title>For Harika ❤️</title>
-
+ 
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+ 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600&display=swap');
-
 body {
-  height: 100vh;
   margin: 0;
-  overflow: hidden;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #fff1f5, #fce7f3);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #ff758c, #ff7eb3);
+  overflow: hidden;
 }
-
-/* Floating hearts */
-.heart {
-  position: fixed;
-  font-size: 20px;
-  animation: floatUp 6s linear infinite;
-}
-
-@keyframes floatUp {
-  0% { transform: translateY(100vh) scale(1); opacity: 1; }
-  100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
-}
-
-/* Falling flowers */
-.flower {
-  position: fixed;
-  font-size: 26px;
-  animation: fall 6s linear forwards;
-}
-
-@keyframes fall {
-  0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
-}
-
-/* Main box */
-.box {
+ 
+.section {
+  display: none;
+  text-align: center;
   background: white;
   padding: 40px;
   border-radius: 25px;
-  text-align: center;
-  box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-  animation: popIn 1s ease;
+  width: 85%;
+  max-width: 420px;
+  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
+  animation: fadeIn 1s ease;
 }
-
-@keyframes popIn {
-  0% { transform: scale(0); }
-  100% { transform: scale(1); }
+ 
+.section.active {
+  display: block;
 }
-
+ 
 h1 {
-  font-family: 'Pacifico', cursive;
-  color: #ff4d6d;
-  margin-bottom: 25px;
+  font-family: 'Playfair Display', serif;
+  color: #b83260;
 }
-
-/* Buttons */
+ 
+p {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.6;
+}
+ 
 button {
-  padding: 14px 35px;
-  font-size: 18px;
+  margin-top: 25px;
+  padding: 12px 28px;
+  font-size: 16px;
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  margin: 10px;
-  transition: transform 0.3s ease;
-}
-
-#yes {
-  background: #4CAF50;
+  background: #b83260;
   color: white;
+  transition: transform 0.3s;
 }
-
-#yes:hover {
-  transform: scale(1.15);
+ 
+button:hover {
+  transform: scale(1.1);
 }
-
+ 
 #no {
-  background: #f44336;
-  color: white;
+  background: #999;
   position: absolute;
 }
-
-/* Glow effect */
-@keyframes glow {
-  0% { box-shadow: 0 0 10px #ff4d6d; }
-  50% { box-shadow: 0 0 35px #ff4d6d; }
-  100% { box-shadow: 0 0 10px #ff4d6d; }
+ 
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+ 
+/* FIREWORKS */
+.firework {
+  position: fixed;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: explode 1.2s ease-out forwards;
+}
+ 
+@keyframes explode {
+  from { transform: scale(0); opacity: 1; }
+  to { transform: scale(25); opacity: 0; }
 }
 </style>
 </head>
-
+ 
 <body>
-
-<div class="box" id="box">
-  <h1>Harika 💖<br>Will you marry me?</h1>
-  <button id="yes" onclick="sayYes()">Yes</button>
+ 
+<!-- PAGE 1 -->
+<div class="section active" id="page1">
+  <h1>Hey Harika 🌸</h1>
+  <p>
+    Some people slowly become special…<br>
+    and before we realise,<br>
+    they become our everything.
+  </p>
+  <button onclick="nextPage(1)">Next</button>
+</div>
+ 
+<!-- PAGE 2 -->
+<div class="section" id="page2">
+  <h1>My Feelings ❤️</h1>
+  <p>
+    With you, life feels lighter.<br>
+    Smiles feel real.<br>
+    And love feels peaceful.
+  </p>
+  <button onclick="nextPage(2)">Next</button>
+</div>
+ 
+<!-- PAGE 3 -->
+<div class="section" id="page3">
+  <h1>One Question 💍</h1>
+  <p style="font-size:18px;">
+    Harika,<br>
+    will you marry me?
+  </p>
+  <button onclick="sayYes()">Yes</button>
   <button id="no" onmouseover="moveNo()">No</button>
 </div>
-
+ 
+<!-- PAGE 4 – CELEBRATION -->
+<div class="section" id="page4">
+  <h1>💖 She Said YES 💖</h1>
+  <p>
+    Today you didn’t just say yes to a question,<br>
+    you said yes to a lifetime with me.<br><br>
+ 
+    I promise to stand by you,<br>
+    respect you, support you,<br>
+    and love you every single day.<br><br>
+ 
+    Thank you for choosing me.<br>
+    I love you, Harika ❤️
+  </p>
+</div>
+ 
 <script>
-/* NO button escape */
+function nextPage(n) {
+  document.getElementById("page"+n).classList.remove("active");
+  document.getElementById("page"+(n+1)).classList.add("active");
+}
+ 
 function moveNo() {
-  const noBtn = document.getElementById("no");
-  noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
-  noBtn.style.top = Math.random() * (window.innerHeight - 60) + "px";
+  const no = document.getElementById("no");
+  no.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  no.style.top = Math.random() * (window.innerHeight - 50) + "px";
 }
-
-/* YES celebration */
+ 
 function sayYes() {
-  const box = document.getElementById("box");
-  box.style.animation = "glow 1.5s infinite";
-  box.innerHTML = `
-    <h1>🌸 She said YES! 🌸</h1>
-    <h2>You took the best decision 💕<br>
-    I love you forever ❤️</h2>
-    <p style="font-size:28px;">💍🌹✨</p>
-  `;
-
-  // flower rain
-  for (let i = 0; i < 30; i++) {
-    setTimeout(createFlower, i * 150);
-  }
+  document.getElementById("page3").classList.remove("active");
+  document.getElementById("page4").classList.add("active");
+  startFireworks();
 }
-
-/* floating hearts always */
-setInterval(() => {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = (15 + Math.random() * 20) + "px";
-  heart.style.animationDuration = (4 + Math.random() * 3) + "s";
-  document.body.appendChild(heart);
-  setTimeout(() => heart.remove(), 6000);
-}, 400);
-
-/* flowers on YES */
-function createFlower() {
-  const flowers = ["🌸","🌹","🌼","💐"];
-  const flower = document.createElement("div");
-  flower.className = "flower";
-  flower.innerHTML = flowers[Math.floor(Math.random()*flowers.length)];
-  flower.style.left = Math.random() * 100 + "vw";
-  flower.style.animationDuration = (4 + Math.random() * 3) + "s";
-  document.body.appendChild(flower);
-  setTimeout(() => flower.remove(), 7000);
+ 
+function startFireworks() {
+  setInterval(() => {
+    const f = document.createElement("div");
+    f.className = "firework";
+    f.style.background = ["#ff4d6d","#ffb703","#9b5de5","#00bbf9"][Math.floor(Math.random()*4)];
+    f.style.left = Math.random()*100 + "vw";
+    f.style.top = Math.random()*100 + "vh";
+    document.body.appendChild(f);
+    setTimeout(() => f.remove(), 1200);
+  }, 250);
 }
 </script>
-
+ 
 </body>
 </html>
