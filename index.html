@@ -11,7 +11,7 @@ body {
   margin: 0;
   height: 100vh;
   font-family: 'Poppins', sans-serif;
-  background: linear-gradient(135deg, #fff1f5, #fce7f3);
+  background: radial-gradient(circle at top, #fff1f5, #f8cdda);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -21,92 +21,125 @@ body {
 .section {
   display: none;
   text-align: center;
-  background: white;
+  background: rgba(255,255,255,0.95);
   padding: 40px;
-  border-radius: 25px;
-  width: 85%;
-  max-width: 420px;
-  box-shadow: 0 25px 60px rgba(0,0,0,0.2);
-  animation: fadeIn 1s ease;
+  border-radius: 30px;
+  width: 88%;
+  max-width: 430px;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.25);
+  animation: fadeIn 1.2s ease;
 }
  
-.section.active {
-  display: block;
-}
+.section.active { display: block; }
  
 h1 {
   font-family: 'Playfair Display', serif;
   color: #b83260;
 }
  
+.glow {
+  text-shadow: 0 0 10px #ffb3c6, 0 0 20px #ff758f;
+}
+ 
 p {
   font-size: 16px;
   color: #444;
-  line-height: 1.6;
+  line-height: 1.7;
 }
  
 button {
   margin-top: 25px;
-  padding: 12px 28px;
+  padding: 12px 30px;
   font-size: 16px;
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  background: #b83260;
+  background: linear-gradient(135deg,#ff4d6d,#b83260);
   color: white;
   transition: transform 0.3s;
 }
  
-button:hover {
-  transform: scale(1.1);
-}
+button:hover { transform: scale(1.1); }
  
 #no {
-  background: #999;
+  background: #aaa;
   position: absolute;
 }
  
-@keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
-}
- 
-/* FIREWORKS */
+/* Fireworks */
 .firework {
   position: fixed;
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  animation: explode 1.2s ease-out forwards;
+  animation: explode 1.3s ease-out forwards;
 }
  
 @keyframes explode {
   from { transform: scale(0); opacity: 1; }
-  to { transform: scale(25); opacity: 0; }
+  to { transform: scale(30); opacity: 0; }
+}
+ 
+/* Floating love */
+.float {
+  position: fixed;
+  font-size: 26px;
+  animation: floatUp 7s linear forwards;
+}
+ 
+@keyframes floatUp {
+  from { transform: translateY(100vh) scale(0.8); opacity: 1; }
+  to { transform: translateY(-15vh) scale(1.4); opacity: 0; }
+}
+ 
+/* Photo reveal */
+.photo {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-top: 25px;
+  box-shadow: 0 0 25px rgba(255,105,135,0.7);
+  animation: photoFade 2s ease forwards;
+}
+ 
+@keyframes photoFade {
+  from { opacity: 0; transform: scale(0.8); }
+  to { opacity: 1; transform: scale(1); }
+}
+ 
+#typeText { min-height: 140px; }
+ 
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
 }
 </style>
 </head>
  
 <body>
  
+<audio id="music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_38f98c6e3c.mp3" type="audio/mpeg">
+</audio>
+ 
 <!-- PAGE 1 -->
 <div class="section active" id="page1">
   <h1>Hey Harika 🌸</h1>
   <p>
-    Some people slowly become special…<br>
-    and before we realise,<br>
-    they become our everything.
+    Some people walk into our life quietly…<br>
+    and slowly become the reason we smile every day.
   </p>
   <button onclick="nextPage(1)">Next</button>
 </div>
  
 <!-- PAGE 2 -->
 <div class="section" id="page2">
-  <h1>My Feelings ❤️</h1>
+  <h1>My Heart ❤️</h1>
   <p>
-    With you, life feels lighter.<br>
-    Smiles feel real.<br>
-    And love feels peaceful.
+    With you, love feels calm.<br>
+    Life feels meaningful.<br>
+    And my heart feels at home.
   </p>
   <button onclick="nextPage(2)">Next</button>
 </div>
@@ -122,20 +155,13 @@ button:hover {
   <button id="no" onmouseover="moveNo()">No</button>
 </div>
  
-<!-- PAGE 4 – CELEBRATION -->
+<!-- PAGE 4 -->
 <div class="section" id="page4">
-  <h1>💖 She Said YES 💖</h1>
-  <p>
-    Today you didn’t just say yes to a question,<br>
-    you said yes to a lifetime with me.<br><br>
+  <h1 class="glow">Harika ❤️</h1>
+  <p id="typeText"></p>
  
-    I promise to stand by you,<br>
-    respect you, support you,<br>
-    and love you every single day.<br><br>
- 
-    Thank you for choosing me.<br>
-    I love you, Harika ❤️
-  </p>
+  <!-- 🔽 HER PHOTO HERE 🔽 -->
+  <img src="https://drive.google.com/file/d/12j-bb3Djhjo-fTjIj6qHh5UTV_YiVpeg/view?usp=sharing" alt="Harika" class="photo">
 </div>
  
 <script>
@@ -153,19 +179,54 @@ function moveNo() {
 function sayYes() {
   document.getElementById("page3").classList.remove("active");
   document.getElementById("page4").classList.add("active");
+ 
+  document.getElementById("music").play();
   startFireworks();
+  startFloating();
+  typeMessage();
 }
  
 function startFireworks() {
   setInterval(() => {
     const f = document.createElement("div");
     f.className = "firework";
-    f.style.background = ["#ff4d6d","#ffb703","#9b5de5","#00bbf9"][Math.floor(Math.random()*4)];
+    f.style.background = ["#ff4d6d","#ffd166","#9b5de5","#00bbf9"][Math.floor(Math.random()*4)];
     f.style.left = Math.random()*100 + "vw";
     f.style.top = Math.random()*100 + "vh";
     document.body.appendChild(f);
-    setTimeout(() => f.remove(), 1200);
+    setTimeout(() => f.remove(), 1300);
+  }, 280);
+}
+ 
+function startFloating() {
+  setInterval(() => {
+    const e = document.createElement("div");
+    e.className = "float";
+    e.innerHTML = ["❤️","💕","💖","🌸","🌹","💐","✨"][Math.floor(Math.random()*7)];
+    e.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 7000);
   }, 250);
+}
+ 
+const message =
+`You choosing me today means more than words can explain.
+I promise to respect you, stand by you,
+and love you in every phase of life.
+ 
+I don’t promise perfection,
+but I promise honesty, care, and forever.
+ 
+Thank you for being my love,
+my partner, and my future.`;
+ 
+let i = 0;
+function typeMessage() {
+  if (i < message.length) {
+    document.getElementById("typeText").innerHTML += message.charAt(i);
+    i++;
+    setTimeout(typeMessage, 40);
+  }
 }
 </script>
  
